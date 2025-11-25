@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+* {
+    font-family: Poppins;
+}
+
+body{
+    background-color: #FDFBF3;
+}
+.user_info{
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.img_user{
+    margin-left: 10px;
+    height: 40px;
+    width: 40px;
+}
+
+.name_user{
+    margin-top: 10px;
+}
+
+.block_data_share {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.container.data_and_share {
+    width: 70%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ---------------------- calender ---------------------------------- */
+.day_of_week{
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: repeat(7, 0.5fr); /* 7 คอลัมน์ */
+    margin: auto;
+    text-align: center; 
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.day {
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* กำหนดให้มี 7 คอลัมน์ */
+    grid-template-rows: repeat(5, 1fr); /* กำหนดให้มี 5 แถว */
+    margin: auto;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.day > div {
+    display: flex;
+    justify-content: center; /* จัดแนวเนื้อหากลางในแนวนอน */
+    align-items: center; /* จัดแนวเนื้อหากลางในแนวตั้ง */
+    aspect-ratio: 1; /* กำหนดให้ช่องเป็นสี่เหลี่ยมจัตุรัส */
+}
+
+.past_day{
+    color: rgb(152, 149, 149);
+}
+
+.btn_day{
+    width: 40px; /* ขนาดปุ่ม */
+    height: 40px; /* ขนาดปุ่ม */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px; /* ทำให้ข้อความในปุ่มอยู่กลาง */
+    box-sizing: border-box;
+}
+
+.calender_header{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+
+}
+
+.next_month{
+    border: none;
+    background-color: transparent;
+}
+
+#setup_email{
+    border: 1px solid black;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgb(233, 234, 234);
+}
+
+.selected{
+    border-radius: 50%;
+    background-color: rgb(250, 202, 202);
+    color: #ffffff;
+}
+
+.monthandyear{
+    font-size: 30px;
+}
+/*------------------------------------------------------------------------------------------------------- */
+
+
+/*---------------------------------------------btn slot time -------------------------------------------- */
+.time_slot{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    max-height: 500px;
+    overflow-y: auto;   /* เปิดใช้งาน scroll แนวตั้ง */
+    padding: 10px;
+
+}
+
+.time_slot_selected{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;     /* จัดให้อยู่กึ่งกลางแนวนอน */
+    text-align: center;      /* จัดข้อความให้อยู่ตรงกลาง */
+    height: auto;            /* ปรับความสูงอัตโนมัติ */
+    width: 100%;             /* ปรับขนาดให้เต็ม container */
+    min-width: 100%;        /* กำหนดขนาดต่ำสุด */
+    max-width: 100%;        /* กำหนดขนาดสูงสุด */
+    padding: 10px;           /* เพิ่ม padding ให้มีระยะห่าง */
+    border: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    word-wrap: break-word;  /* ให้ข้อความตัดบรรทัดเมื่อพื้นที่ไม่พอ */
+}
+
+.time_slot_booking {
+    display: flex;
+    flex-direction: column;  /* ให้ข้อความเรียงแนวตั้ง */
+    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    align-items: center;     /* จัดให้อยู่กึ่งกลางแนวนอน */
+    text-align: center;      /* จัดข้อความให้อยู่ตรงกลาง */
+    height: auto;            /* ปรับความสูงอัตโนมัติ */
+    width: 100%;             /* ปรับขนาดให้เต็ม container */
+    min-width: 100%;        /* กำหนดขนาดต่ำสุด */
+    max-width: 100%;        /* กำหนดขนาดสูงสุด */
+    padding: 10px;           /* เพิ่ม padding ให้มีระยะห่าง */
+    border: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    word-wrap: break-word;  /* ให้ข้อความตัดบรรทัดเมื่อพื้นที่ไม่พอ */
+}
+
+/* ปรับขนาดตัวอักษรให้ Responsive */
+.time_slot_booking p {
+    font-size: clamp(12px, 2vw, 18px); /* ปรับขนาดอัตโนมัติ */
+    margin: 5px 0; /* ให้มีระยะห่างระหว่างข้อความ */
+}
+
+
+.time_slot_selected p {
+    font-size: clamp(15px, 2vw, 18px); 
+    margin: 5px 0; 
+}
+
+.time_slot_selected svg {
+    padding-top: 5px;
+}
+
+
+.time_selected {
+    background-color: #007bff !important; /* เปลี่ยนสีปุ่ม */
+    color: white !important;
+    transform: translateY(-3px); /* เลื่อนขึ้น */
+    transition: all 0.2s ease;
+}
+
+.time_selected svg{
+    color: red;
+    fill:red;
+}
+
+.time_selected_finish{
+    background-color: #007bff !important; /* เปลี่ยนสีปุ่ม */
+    color: white !important;
+    transform: translateY(-3px); /* เลื่อนขึ้น */
+    transition: all 0.2s ease;
+}
+
+.time_selected_finish svg{
+    color: red;
+    fill:red;
+}
+
+.show_day{
+    font-size: 18px;
+}
+
+.add_people{
+    display: flex;
+    flex-direction: row;
+}
+
+
+/*------------------------------------------------------------------------------------------------------- */
+
+
+/*-------------------------------------------------------detail form --------------------------------------------------- */
+.detail_form div{
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.detail_form div p {
+    font-size: clamp(12px, 2vw, 16px); 
+    margin: 5px 0; 
+}
+
+/*------------------------------------------------------------------------------------------------------- */
+
+.next{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    
+}
+
+
+/*----------------------------------popup submit email and all data -------------------------------------------- */
+.overlay_popup_send_email{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* ความมืดของพื้นหลัง */
+    display: none; /* ซ่อน popup เริ่มต้น */
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* ทำให้ pop-up อยู่ด้านบนสุด */
+}
+
+.form_mail{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 900px;
+}
+
+.input_form input{
+    width: 400px;
+    border-radius: 10px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.input_form p{
+    font-size: 16px;
+}
+
+.input_form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+#edit_prefer_t{
+    border: none;
+    background-color: transparent;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.information_selected{
+    justify-content: left;
+}
+
+#btn_share_time{
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: #ffe5cd;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.share_time{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}

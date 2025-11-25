@@ -1,0 +1,381 @@
+{% extends "dodle/base.html" %} {% block content %}
+<button class="btn_list_menu mb-3">
+  <img src="/static/icon/list_menu.png" />
+</button>
+
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    overflow-x: auto; /* Enables horizontal scrolling if needed */
+    gap: 20px;
+    padding: 10px;
+    justify-content: center; /* Centers items on smaller screens */
+  }
+
+  .card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: transform 0.2s ease-in-out;
+    flex: 1; /* Makes it responsive */
+    min-width: 400px; 
+    min-height: 200px; 
+    padding: 30px; 
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .banner {
+    height: 60vh;
+    width: 97vw;
+    display: flex;
+    flex-direction: row; /* Default for larger screens */
+  }
+
+  .banner-text {
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+  }
+
+  .banner-image {
+    border-radius: 20px;
+    object-fit: cover;
+    width: 80%;
+    height: 110%;
+    object-position: 50% 35%;
+    margin-left: 50px;
+  }
+
+  .getting_started_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid black;
+    background-color: rgba(253, 237, 210, 1);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .getting_started_btn:hover {
+    transform: scale(1.1);
+    background-color: rgb(209, 232, 255);
+  }
+  
+
+    .banner-sub-text {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      margin-bottom: 100px;
+      margin-left: 150px;
+    }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    /* Tablets */
+    .card {
+      flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    }
+
+    .banner-text {
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+    }
+
+
+    .banner-sub-text {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      margin-bottom: 80px;
+    }
+
+    .getting_started_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid black;
+      background-color: rgba(253, 237, 210, 1);
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    
+    .getting_started_btn:hover {
+      transform: scale(1.1);
+      background-color: rgb(209, 232, 255);
+    }
+    
+  }
+
+  @media (max-width: 480px) {
+    /* Mobile */
+    .card {
+      flex: 1 1 100%; /* 1 card per row */
+    }
+
+    .banner-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      margin-bottom: 10px;
+    }
+
+
+    .banner-sub-text {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      margin-bottom: 10px;
+    }
+
+    .getting_started_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid black;
+      background-color: rgba(253, 237, 210, 1);
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    
+    .getting_started_btn:hover {
+      transform: scale(1.1);
+      background-color: rgb(209, 232, 255);
+    }
+    
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap; /* Allows wrapping on smaller screens */
+      overflow-y: auto; /* Enables horizontal scrolling if needed */
+      gap: 15px;
+      padding: 10px;
+      justify-content: center; /* Centers items on smaller screens */
+      height: 30vh;
+    }
+
+    .banner {
+      flex-direction: column; /* Switch to column layout on mobile */
+      height: auto; /* Make height adjust to content */
+      width: auto;
+    }
+
+    .banner > div {
+      flex: 1; /* Allow both inner divs to take equal space */
+    }
+
+    .banner-text {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .banner-image {
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+      object-position: 50% 35%;
+    }
+
+  }
+
+  .group-poll{
+    background-color:rgb(241, 229, 253);
+  }
+
+  .sign-up-sheet{
+    background-color: rgba(255, 215, 253, 0.4);
+  }
+
+  .booking-page{
+    background-color:rgb(227, 255, 244);
+  }
+
+  .one-on-one{
+    background-color:rgb(217, 236, 255);
+  }
+
+  .info{
+    display:flex;
+    gap:10px;
+  }
+
+  .info p{
+    margin-top:5px;
+  }
+
+  .show_info_people{
+    display:flex;
+    justify-content:center;
+    border : 1px solid black;
+    background-color:black;
+    color:white;
+    border-radius:10px
+  }
+
+</style>
+
+<div class="banner">
+
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+    <div style="flex: 1; margin-top: 60px; display: flex; align-items: center; justify-content: center;">
+      <div class="banner-text">Professional scheduling made easy</div>
+    </div>
+
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+      <div class="banner-sub-text"> Dodle is the fastest and easiest way to schedule anything — from meetings to the next great collaboration. </div>
+    </div>
+
+    <div style="flex: 1;">
+      <div class="getting_started_btn">Getting started </div>
+    </div>
+  </div>
+
+  <div style="flex: 1">
+    <img src="/static/icon/banner.png" class="banner-image" />
+  </div>
+</div>
+
+<div
+  style="
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 30px;
+  "
+>
+  Your created form will be display here below !
+</div>
+<div
+  style="
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 10px;
+    padding: 10px;
+  "
+>
+  <div class="card-container">
+    {% for form in all_forms %}
+        <div class="card {{form.form_type}}" onclick="window.location.href='{{ form.link }}'">
+            <div>Mon , 20 Jun 2025</div>
+            <div style="font-size: 25px; font-weight: bold; color: #333">
+                {{ form.title }}
+            </div>
+            <div style="font-size: 14px; color: #666; margin-bottom: 15px">
+                {{ form.form_type }}
+            </div>
+            <div class='info'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width='30' height='30'>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                </svg>        
+                <p>{{ form.description }}</p>
+            </div>
+            <div class='info'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width='30' height='30'>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                </svg>        
+                <p>{{form.location}}</p>
+            </div>
+            <p class='show_info_people' id="{{form.id}}">thank</p>
+            
+        </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+    var form_data = {{ all_forms | tojson }};
+    console.log(form_data);
+    var list_of_people = [];
+
+
+    //iterate on form_data
+    function iterate_form_data(index){
+      if(index >= form_data.length){
+        return;
+      }
+
+      var form = form_data[index];
+      console.log('id', form['id']);
+      
+      var url = `/dodle/get-all-form-participants/${form['id']}`;
+
+      $.getJSON(url, function(response){
+        console.log('res', response);
+        var le = response.length;
+        $(`#${form['id']}`).text(`${le} people have voted`);
+
+        iterate_form_data(index+1);
+      }).fail(function(){
+        console.log("Request fail");
+        return;
+      });
+    }
+
+    $(document).ready(function(){
+      iterate_form_data(0);
+    });
+
+    //console.log('list',list_of_peole);
+
+
+</script>
+
+{% endblock content %}
+
+

@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create and share</title>
+
+    <!-- for styling table -->
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+
+  
+  <body class="bg-gray-200">
+    <div class="flex items-center justify-center mt-2">
+      <div class="w-[70%] bg-white">
+        <!-- TITLE -->
+        <div class="flex items-center justify-center text-6xl mb-7 mt-3">
+          {{ form_info[0].title }}
+        </div>
+        <!-- FORM CREATER INFO -->
+        <div class="flex items-center justify-center mb-25">
+          by {{ form_owner[0].name }}, {{ form_owner[0].email }},
+          <img
+            src="{{ form_owner[0].avatar_url }}"
+            width="52"
+            class="mx-2 text-black text-xl"
+          />
+        </div>
+
+        <div class="p-4 mb-10">
+          <div>📍 location : {{ form_info[0].location }}</div>
+          <div>📜 description : {{ form_info[0].description }}</div>
+          <div>⌛ duration : {{ form_info[0].duration }}</div>
+        </div>
+
+
+        {% if form_info[0]['form_type'] == 'group-poll' %}
+        <!-- ------------------------------------------------------------------------------------------------------------ -->
+        <!-- PARTICIPANT OPTIONS TABLE -->
+        <div
+          class="mx-10 max-h-64 overflow-y-auto border border-gray-300 rounded-lg shadow-md"
+        >
+          <table class="w-full border-collapse table-fixed">
+            <!-- Table Header (Sticky) -->
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr></tr>
+            </thead>
+
+            <!-- Table Body (Scrollable) -->
+            <tbody class="divide-y divide-gray-200">
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- END PARTICIPANT OPTIONS TABLE -->
+
+        <!-- hidden form that do and handle all the magic, the name & email & button are static but other input field are dynamically add-->
+        <form
+          action=""
+          class="w-full h-full"
+          id="hidden_form_that_will_do_the_magic"
+        >
+          <div class="flex items-center justify-end">
+            <!-- name field -->
+            <div class="flex items-center space-x-3">
+              <label for="name" class="font-medium">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <!-- email field -->
+            <div class="flex items-center space-x-3 mx-5">
+              <label for="email" class="font-medium">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="p-2 hover:border-2 border-green-900 bg-green-500 m-2 mx-10 my-5 rounded-md flex flex-col items-center justify-center w-[10%]"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <!-- end of magic hidden form-->
+
+        <!--POST ADMIN SECTION-->
+        {% if current_user.id == form_info[0]['owner_id'] %}
+        <div class="p-4">
+          You are the owner of this form. select the option below to finalise
+          the vote and notify the participant
+        </div>
+
+        <div class="mx-10 max-h-64 overflow-y-auto rounded-lg ">
+          <table class="w-full border-collapse table-fixed" id="admin_table">
+            <!-- Table Header -->
+            <thead class="bg-gray-100 top-0 z-10">
+              <tr></tr>
+            </thead>
+
+            <!-- Table Body -->
+            <tbody class="">
+              <tr></tr>
+            </tbody>
+          </table>
+
+          <form class="flex items-center justify-center" id="admin_form">
+            <!-- <input class="hidden" type="text" name="message" /> -->
+            <button
+              type="submit"
+              class="p-2 hover:border-2 border-green-900 bg-green-500 m-2 mx-10 my-5 rounded-md flex flex-col items-center justify-center w-[50%] w-[50%]"
+            >
+              Select & Notify user
+            </button>
+          </form>
+        </div>
+        <div class="flex items-center justify-center">
+          <div class="bg-red-300 p-5 m-5 rounded-md hover:border-blue-400 hover:border-2 admin_delete hover:cursor-pointer">delete form</div>
+        </div>
+        {% endif %}
+        <!--END POST ADMIN SECTION-->
+
+
+        {% elif form_info[0]['form_type'] == 'sign-up-sheet' %}
+        <!-- -------------------------------------------------------------------------------------------------------- -->
+        <!-- PARTICIPANT OPTIONS TABLE -->
+        <div
+          class="mx-10 max-h-64 overflow-y-auto border border-gray-300 rounded-lg shadow-md"
+        >
+          <table class="w-full border-collapse table-fixed">
+            <!-- Table Header (Sticky) -->
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr></tr>
+            </thead>
+
+            <!-- Table Body (Scrollable) -->
+            <tbody class="divide-y divide-gray-200">
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- END PARTICIPANT OPTIONS TABLE -->
+
+        <!-- hidden form that do and handle all the magic, the name & email & button are static but other input field are dynamically add-->
+        <form
+          action=""
+          class="w-full h-full"
+          id="hidden_form_that_will_do_the_magic"
+        >
+          <div class="flex items-center justify-end">
+            <!-- name field -->
+            <div class="flex items-center space-x-3">
+              <label for="name" class="font-medium">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <!-- email field -->
+            <div class="flex items-center space-x-3 mx-5">
+              <label for="email" class="font-medium">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="p-2 hover:border-2 border-green-900 bg-green-500 m-2 mx-10 my-5 rounded-md flex flex-col items-center justify-center w-[10%]"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <!-- end of magic hidden form-->
+
+        <!--POST ADMIN SECTION-->
+        {% if current_user.id == form_info[0]['owner_id'] %}
+        <div class="p-4">
+          You are the owner of this form.
+        </div>
+        <div class="flex items-center justify-center">
+          <div class="bg-red-300 p-5 m-5 rounded-md hover:border-blue-400 hover:border-2 admin_delete hover:cursor-pointer">delete form</div>
+        </div>
+
+        
+
+        {% endif %}
+        
+
+        {% elif form_info[0]['form_type'] == 'one-on-one' %}
+        
+        <!-- -------------------------------------------------------------------------------------------------------- -->
+        <!-- PARTICIPANT OPTIONS TABLE -->
+        <div
+          class="mx-10 max-h-64 overflow-y-auto border border-gray-300 rounded-lg shadow-md"
+        >
+          <table class="w-full border-collapse table-fixed">
+            <!-- Table Header (Sticky) -->
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr></tr>
+            </thead>
+
+            <!-- Table Body (Scrollable) -->
+            <tbody class="divide-y divide-gray-200">
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- END PARTICIPANT OPTIONS TABLE -->
+
+        <!-- hidden form that do and handle all the magic, the name & email & button are static but other input field are dynamically add-->
+        <form
+          action=""
+          class="w-full h-full"
+          id="hidden_form_that_will_do_the_magic"
+        >
+          <div class="flex items-center justify-end">
+            <!-- name field -->
+            <div class="flex items-center space-x-3">
+              <label for="name" class="font-medium">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <!-- email field -->
+            <div class="flex items-center space-x-3 mx-5">
+              <label for="email" class="font-medium">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="p-2 hover:border-2 border-green-900 bg-green-500 m-2 mx-10 my-5 rounded-md flex flex-col items-center justify-center w-[10%]"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <!-- end of magic hidden form-->
+
+        <!--POST ADMIN SECTION-->
+        {% if current_user.id == form_info[0]['owner_id'] %}
+        <div class="p-4">
+          You are the owner of this form.
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="bg-red-300 p-5 m-5 rounded-md hover:border-blue-400 hover:border-2 admin_delete hover:cursor-pointer">delete form</div>
+        </div>
+
+        {% endif %}
+
+        {% else %}
+
+        <!-- -------------------------------------------------------------------------------------------------------- -->
+        <!-- PARTICIPANT OPTIONS TABLE -->
+        <div
+          class="mx-10 max-h-64 overflow-y-auto border border-gray-300 rounded-lg shadow-md"
+        >
+          <table class="w-full border-collapse table-fixed">
+            <!-- Table Header (Sticky) -->
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr></tr>
+            </thead>
+
+            <!-- Table Body (Scrollable) -->
+            <tbody class="divide-y divide-gray-200">
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- END PARTICIPANT OPTIONS TABLE -->
+
+        <!-- hidden form that do and handle all the magic, the name & email & button are static but other input field are dynamically add-->
+        <form
+          action=""
+          class="w-full h-full"
+          id="hidden_form_that_will_do_the_magic"
+        >
+          <div class="flex items-center justify-end">
+            <!-- name field -->
+            <div class="flex items-center space-x-3">
+              <label for="name" class="font-medium">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <!-- email field -->
+            <div class="flex items-center space-x-3 mx-5">
+              <label for="email" class="font-medium">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="border p-2 rounded w-60"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="p-2 hover:border-2 border-green-900 bg-green-500 m-2 mx-10 my-5 rounded-md flex flex-col items-center justify-center w-[10%]"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <!-- end of magic hidden form-->
+
+        <!--POST ADMIN SECTION-->
+        {% if current_user.id == form_info[0]['owner_id'] %}
+        <div class="p-4">
+          You are the owner of this form.
+        </div>
+
+        <div class="flex items-center justify-center">
+          <div class="bg-red-300 p-5 m-5 rounded-md hover:border-blue-400 hover:border-2 admin_delete hover:cursor-pointer">delete form</div>
+        </div>
+
+        {% endif %}
+        
+        {% endif %}
+        <!----------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+        <!-- HTML MOSTLY DO NOT NEED MODIFICATION AND ADDITIONAL LOGIC TO WORK WITH ANOTHER TYPES OF FORM -->
+      </div>
+    </div>
+
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <!-- tailwindcss -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% if form_info[0].form_type == 'group-poll' %}
+    <script>
+      var formItems = {{ form_items | tojson }}; // CONTAIN LIST OF FORM iTEMS (EACH VOTE/SIGN-UP OPTION SLOT)
+      var formInfo = {{ form_info | tojson }}; // CONTAIN LIST OF ONE OBJECT(BRUH) ABOUT FORM INFO, LIKE FORM ID(USE FOR SENDING QUERY TO BACKEND), TITLE, DESCRIPTION ETC.
+
+      //WORK FOR ALL TYPE OF FORM, BY USING HIDDEN INPUT AS CONVENTION
+      function clear_form() {
+        var $form = $("#hidden_form_that_will_do_the_magic");
+        $form.find("input.hidden.tanya").remove(); //CONVENTION ALL HIDDEN INPUT IN MAGIC FORM MUST ALSO CONTAIN CLASS tanya
+      }
+
+
+
+      //WORK FOR ALL FORM TYPE, BUT THERR NEED MODIFICATION AT POPULATE FUNCTION!!!
+      function refresh_table() {
+        $("thead tr").empty();
+        $("tbody tr").empty();
+        var url = `/dodle/get-all-form-items/${formInfo[0].id}`;
+        $.getJSON(url, function (response) {
+          populate_table(response);
+        });
+      }
+
+
+      //***********************************************************************************************************************************************************
+      //NEED MODIFICATION TO SUPPORT 4 TYPES OF FORM AT headCellTML,bodyCellHTML part possibly using conditional logic
+      function populate_table(formItems) {
+        console.log("dataaaaaaaaaaaa", formItems);
+        //console.log( {{ current_user.id }} , formInfo[0].owner_id);
+        const isAdmin = {{ current_user.id | default(0) }} == formInfo[0].owner_id;
+
+        formItems.sort((a, b) => a.id - b.id);
+        formItems.forEach(item => {
+        const headCellHTML = `
+                          <td>
+                            <div class="flex items-center justify-center">${item.date}</div>
+                            <div class="flex items-center justify-center">${item.start_time}</div>
+                            <div class="flex items-center justify-center">${item.end_time}</div>
+                          </td>
+                          `;
+
+        const bodyCellHTML = `
+                            <td class="hover:bg-blue-200">
+                              <input type="number" value=${item.id} class="hidden form_item_id"">
+                              <input type="number" value=${item.score} class="hidden form_item_score">
+                              <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                              <div class="flex items-center justify-center text-blue-500 font-bold text-xl cursor-pointer">☑️ ${item.score}</div>
+                            </td>
+                            `;
+
+        $("thead tr").first().append(headCellHTML);
+
+        $("tbody tr").first().append(bodyCellHTML);
+
+        //for admin user
+        if (isAdmin) {
+          $("table#admin_table thead tr").first().prepend(headCellHTML);
+        }
+
+      });
+      //these two line can be left as it is
+      $("thead tr").first().prepend(`<td></td>`);
+      $("tbody tr").first().prepend(`<td class="leave_me_alone"><div class="flex items-center justify-center"  >select you vote</div></td>`);
+
+
+      //***********************************************************************************************************************************************************
+      //POPULATE USER VOTE INFO BELOW TABLE, NEED CONDITIONAL FOR IT TO WORK WITH ALL TYPES OF FORM
+      var current_form_id = formInfo[0].id;
+      $.getJSON(`/dodle/get-all-form-participants/${current_form_id}`, function (all_current_form_participants) {
+        all_current_form_participants.forEach(participant => {
+          console.log(participant);
+          $("tbody tr:first").after(`<tr id="${participant.id}"> <td><div class="flex items-center justify-center" >👤 ${participant.name}</div></td> </tr>`)
+          $.getJSON(`/dodle/get-all-form-participant-choices/${participant.id}`, function (this_paricipant_choices) {
+            // console.log(this_paricipant_choices);
+
+            formItems.forEach(item => {
+              let found = this_paricipant_choices.find(obj => obj.form_item_id == item.id);
+              if (found === undefined) {
+                $(`tbody tr#${participant.id}`).append(`<td><div></div></td>`)
+              } else {
+                $(`tbody tr#${participant.id}`).append(`<td class="bg-green-300"><div class="flex items-center justify-center">✔️</div></td>`)
+              }
+            });
+          });
+        });
+      });
+                      } //END POPULATE_TABLE FUNCTION ****************************************************************************************************************************
+
+
+
+
+
+      //FOR EVENT THAT NEED DELEGATION/INVOKE AS THE PAGE LOAD
+      $(document).ready(function () {
+        $(".admin_delete").click(function(){
+          if(!confirm("are you sure you want to delete this post?")){
+            return;
+          }
+          $.post("/dodle/remove-form", {"form_id" : formInfo[0].id},function(response){
+            console.log(response);
+
+            if(response == "deleted"){
+              window.location.href = "/dodle/home";
+              alert("delete successfuly!");
+            }
+          });
+      });
+
+      populate_table(formItems);
+
+        //ADMIN SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+        //FOR ADMIN FINALISING THE VOTE AND INVOKE THE MAIL SERVER
+        let message = "";
+        $("table#admin_table").on("click", "tr:first td", function () {
+          //cancel the cell selected in state before, if exist
+          $("table#admin_table tr:first").children().removeClass('bg-green-300');
+          $(this).addClass('bg-green-300');
+
+          var texts = $(this).find("div").map(function () {
+            return $(this).text();
+          }).get(); // Convert to a normal JS array
+
+          message = "On " + texts[0] + ", from " + texts[1] + " to " + texts[2] + ", you have appointed " + formInfo[0].title + " at " + formInfo[0].location + " the vote has been finalised by the organizer and we hope you can make your attendance. the event will last about " + formInfo[0].duration;
+          //  console.log(formInfo)
+          //  console.log(message);
+        });
+
+        //ADMIN FORM SUBMIT(NOTIFY USER) EVENT HANDLER
+        $("#admin_form").submit(function (event) {
+          // prevent default html form submission action
+          event.preventDefault();
+
+          if (message == "") { //ASSUMING THAT MESSAGE IS EMPTY IF AND ONLY IF THE ORGANIZER DID NOT PICK ANY FINALISE DATE
+            alert("you need to select your decided meeting date!!");
+            return;
+          }
+
+          //make a post request to invoke that mail server
+          $.getJSON(`/dodle/get-all-form-participants/${formInfo[0].id}`, function (form_participants) {
+            form_participants.forEach(participant => {
+
+              $.post('/send-mail', { "title": formInfo[0].title, "message": message, "email": participant.email }, function (response) {
+                console.log(participant.name, response);
+              });
+            });
+          });
+        });
+
+
+
+
+
+
+        //end ADMIN SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        //USER SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        // select vote event handler
+        $("tbody").on("click", "tr:first td", function () {
+          if ($(this).hasClass("leave_me_alone")) {
+            return;
+          }
+          var current_score = parseInt($(this).find("input.form_item_score").val(), 10);
+          var form_item_id = parseInt($(this).find("input.form_item_id").val(), 10);
+          var $form = $("#hidden_form_that_will_do_the_magic");
+
+
+          if ($(this).hasClass("bg-green-300 hover:bg-green-300")) { //undo select
+            $(this).find("div:first").text(`☑️ ${current_score}`);
+            $(this).removeClass("bg-green-300 hover:bg-green-300");
+
+            $form.find(`#for_form_item_id_${form_item_id}`).remove();
+          } else { //select
+            $(this).find("div:first").text(`✅ ${current_score + 1}`);
+            $(this).addClass("bg-green-300 hover:bg-green-300");
+            const hiddenInput = `
+                              <input type="number" class="hidden tanya" name="form_item_id_${form_item_id}" id="for_form_item_id_${form_item_id}" value=${form_item_id}>
+                            `;
+            $form.append(hiddenInput);
+          }
+        }); //end select vote event handler
+
+
+
+
+
+        //submit vote event handler
+        $("#hidden_form_that_will_do_the_magic").submit(function (event) {
+          //prevent default html form submission action, cuz I want to do AJAX call below the submit button to show something cool
+          event.preventDefault();
+
+          //pack the inputs into a dictionary(js object bruhh, dictionary such a goofy name to me)
+          var formData = {};
+          $(":input").each(function () {
+            var key = $(this).attr("name");
+            var val = $(this).val();
+
+            if (key == undefined) {
+              return;
+            }
+            formData[key] = val;
+          });
+
+          //don't allow user to send vote and participate when he don't tick any box
+          if (Object.keys(formData).length === 2) {
+            alert("you need to select at least one vote!");
+            return;
+          }
+          formData['form_info_id'] = formInfo[0]['id'];
+
+          $.getJSON(`/hashing/${formInfo[0]['title']}`, function(response){
+            formData['form_voting_password'] = response.hashed_title;
+            
+            var $form = $(this);
+            var url = `/dodle/send-vote/${formInfo[0].id}`;
+            
+            //make post request to send vote
+            $.post(url, formData, function (response) {
+              refresh_table();
+              clear_form();
+            });
+            
+          });
+
+        }); //end submit vote event handler
+
+
+      });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+    {% elif form_info[0].form_type == 'sign-up-sheet' %}
+    <script>
+      var formItems = {{ form_items | tojson }}; // CONTAIN LIST OF FORM iTEMS (EACH VOTE/SIGN-UP OPTION SLOT)
+      var formInfo = {{ form_info | tojson }}; // CONTAIN LIST OF ONE OBJECT(BRUH) ABOUT FORM INFO, LIKE FORM ID(USE FOR SENDING QUERY TO BACKEND), TITLE, DESCRIPTION ETC.
+
+
+      //WORK FOR ALL TYPE OF FORM, BY USING HIDDEN INPUT AS CONVENTION
+      function clear_form() {
+        var $form = $("#hidden_form_that_will_do_the_magic");
+        $form.find("input.hidden.tanya").remove(); //CONVENTION ALL HIDDEN INPUT IN MAGIC FORM MUST ALSO CONTAIN CLASS tanya
+      }
+
+
+
+      //WORK FOR ALL FORM TYPE, BUT THERR NEED MODIFICATION AT POPULATE FUNCTION!!!
+      function refresh_table() {
+        $("thead tr").empty();
+        $("tbody tr").empty();
+        var url = `/dodle/get-all-form-items/${formInfo[0].id}`;
+        $.getJSON(url, function (response) {
+          populate_table(response);
+        });
+      }
+
+
+      //***********************************************************************************************************************************************************
+      //NEED MODIFICATION TO SUPPORT 4 TYPES OF FORM AT headCellTML,bodyCellHTML part possibly using conditional logic
+      function populate_table(formItems) {
+        // console.log( {{ current_user.id }} , formInfo[0].owner_id);
+        const isAdmin = {{ current_user.id | default(0) }} == formInfo[0].owner_id;
+        // const isAdmin = true;
+
+      formItems.sort((a, b) => a.id - b.id);
+      formItems.forEach(item => {
+        const headCellHTML = `
+                                <td>
+                                  <div class="flex items-center justify-center">${item.date}</div>
+                                  <div class="flex items-center justify-center">${item.start_time}</div>
+                                  <div class="flex items-center justify-center">${item.end_time}</div>
+                                </td>
+                                `;
+        //TODO: make if else for bodyCell
+        let bodyCellHTML = `
+                                <td class="hover:bg-blue-200">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-blue-500 font-bold text-xl cursor-pointer"> ☑️ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                `;
+
+                                if(item.score == item.maxcap){
+                                  bodyCellHTML = `
+                                <td class="bg-red-300">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-red-500 font-bold text-xl cursor-pointer"> ❌ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                                    `;
+                                }
+        $("thead tr").first().append(headCellHTML);
+
+        $("tbody tr").first().append(bodyCellHTML);
+
+        //for admin user
+        if (isAdmin) {
+          $("table#admin_table thead tr").first().prepend(headCellHTML);
+        }
+
+      });
+      //these two line can be left as it is
+      $("thead tr").first().prepend(`<td></td>`);
+      $("tbody tr").first().prepend(`<td class="leave_me_alone"><div class="flex items-center justify-center"  >pick your availability</div></td>`);
+
+
+      //***********************************************************************************************************************************************************
+      //POPULATE USER VOTE INFO BELOW TABLE, NEED CONDITIONAL FOR IT TO WORK WITH ALL TYPES OF FORM
+      var current_form_id = formInfo[0].id;
+      $.getJSON(`/dodle/get-all-form-participants/${current_form_id}`, function (all_current_form_participants) {
+        all_current_form_participants.forEach(participant => {
+          // console.log(participant);
+          $("tbody tr:first").after(`<tr id="${participant.id}"> <td><div class="flex items-center justify-center" >👤 ${participant.name}</div></td> </tr>`)
+          $.getJSON(`/dodle/get-all-form-participant-choices/${participant.id}`, function (this_paricipant_choices) {
+            // console.log(this_paricipant_choices);
+
+            formItems.forEach(item => {
+
+
+              let found = this_paricipant_choices.find(obj => obj.form_item_id == item.id);
+              if (found === undefined) {
+                $(`tbody tr#${participant.id}`).append(`<td><div></div></td>`)
+              } else {
+                $(`tbody tr#${participant.id}`).append(`<td class="bg-green-300"><div class="flex items-center justify-center">✔️</div></td>`)
+              }
+            });
+          });
+        });
+      });
+      } //END POPULATE_TABLE FUNCTION ****************************************************************************************************************************
+
+
+      //FOR EVENT THAT NEED DELEGATION/INVOKE AS THE PAGE LOAD
+      $(document).ready(function () {
+
+        $(".admin_delete").click(function(){
+          if(!confirm("are you sure you want to delete this post?")){
+            return;
+          }
+          $.post("/dodle/remove-form", {"form_id" : formInfo[0].id},function(response){
+            console.log(response);
+
+            if(response == "deleted"){
+              window.location.href = "/dodle/home";
+              alert("delete successfuly!");
+            }
+          });
+        });
+
+        populate_table(formItems);
+
+        //USER SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        // select vote event handler
+        $("tbody").on("click", "tr:first td", function () {
+          if ($(this).hasClass("leave_me_alone")) {
+            return;
+          }
+          var current_score = parseInt($(this).find("input.form_item_score").val(), 10);
+          var maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+          var form_item_id = parseInt($(this).find("input.form_item_id").val(), 10);
+          var $form = $("#hidden_form_that_will_do_the_magic");
+
+          if( current_score == maxcap){
+            alert('there is no more empty seat!');
+            return;
+          }
+
+
+          if ($(this).hasClass("bg-green-300 hover:bg-green-300")) { //undo select
+            $(this).find("div:first").text(`☑️ ${current_score} / ${maxcap}`);
+            $(this).removeClass("bg-green-300 hover:bg-green-300");
+
+            $form.find(`#for_form_item_id_${form_item_id}`).remove();
+          } else { //select
+            //undo all select before
+            $(this).siblings().removeClass("bg-green-300 hover:bg-green-300");
+            //set all td to have correct score
+            $(this).siblings("td:not(.leave_me_alone)").each(function(){
+              var sibling_score = parseInt($(this).find("input.form_item_score").val(),10);
+              var sibling_maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+
+              $(this).find("div:first").text(`☑️ ${sibling_score} / ${sibling_maxcap}`);
+            });
+            clear_form();
+
+            $(this).find("div:first").text(`✅ ${current_score + 1} / ${maxcap}`);
+            $(this).addClass("bg-green-300 hover:bg-green-300");
+            const hiddenInput = `
+                                    <input type="number" class="hidden tanya" name="form_item_id_${form_item_id}" id="for_form_item_id_${form_item_id}" value=${form_item_id}>
+                                  `;
+            $form.append(hiddenInput);
+          }
+        }); //end select vote event handler
+
+        //submit vote event handler
+        $("#hidden_form_that_will_do_the_magic").submit(function (event) {
+          //prevent default html form submission action, cuz I want to do AJAX call below the submit button to show something cool
+          event.preventDefault();
+
+          //pack the inputs into a dictionary(js object bruhh, dictionary such a goofy name to me)
+          var formData = {};
+          $(":input").each(function () {
+            var key = $(this).attr("name");
+            var val = $(this).val();
+
+            if (key == undefined) {
+              return;
+            }
+            formData[key] = val;
+          });
+
+          //don't allow user to send vote and participate when he don't tick any box
+          if (Object.keys(formData).length === 2) {
+            alert("you have yet to select anything!");
+            return;
+          }
+          formData['form_info_id'] = formInfo[0]['id'];
+          
+
+
+          var form_item_id = $(this).find("input.hidden.tanya").val();
+          
+          var title = "",message = "", email = formData['email'];
+          formItems.forEach(item => {
+            if(item.id == form_item_id){
+              title = formInfo[0].title;
+              message = "you have appointment on " + item.date +" from "+ item.start_time + " to " + item.end_time + " at " + formInfo[0].location + " the duration is specify to be " + formInfo[0].duration + ", we hope you can make your attendance.";
+            } else {
+              return;
+            }
+          });
+
+
+          console.log('dataaaaaaaaaaaaaaaaaaaaaaaaa', formData);
+          var $form = $(this);
+          var url = `/dodle/send-vote/${formInfo[0].id}`;
+          //make post request to send vote
+          $.getJSON(`/hashing/${formInfo[0]['title']}`, function(response){
+            formData['form_voting_password'] = response.hashed_title;
+            
+            //make post request to send vote
+            $.post(url, formData, function (response) {
+              console.log(response);
+              if(response == "success"){
+                //send notify mail
+                $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                  console.log(response);
+                });
+              } else {
+                alert("the room already full! please select another option")
+              }
+              refresh_table();
+              clear_form();
+            });
+            
+          });
+/* 
+          $.post(url, formData, function (response) {
+            console.log(response);
+            if(response == "success"){
+              //send notify mail
+              $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                console.log(response);
+              });
+            } else {
+              alert("the room already full! please select another option")
+            }
+
+            refresh_table();
+            clear_form();
+          });
+*/
+
+        }); //end submit vote event handler
+
+
+
+      });
+    </script>
+
+    {% elif form_info[0].form_type == 'one-on-one' %} 
+    <script>
+      var formItems = {{ form_items | tojson }}; // CONTAIN LIST OF FORM iTEMS (EACH VOTE/SIGN-UP OPTION SLOT)
+      var formInfo = {{ form_info | tojson }}; // CONTAIN LIST OF ONE OBJECT(BRUH) ABOUT FORM INFO, LIKE FORM ID(USE FOR SENDING QUERY TO BACKEND), TITLE, DESCRIPTION ETC.
+
+
+      //WORK FOR ALL TYPE OF FORM, BY USING HIDDEN INPUT AS CONVENTION
+      function clear_form() {
+        var $form = $("#hidden_form_that_will_do_the_magic");
+        $form.find("input.hidden.tanya").remove(); //CONVENTION ALL HIDDEN INPUT IN MAGIC FORM MUST ALSO CONTAIN CLASS tanya
+      }
+
+
+      //WORK FOR ALL FORM TYPE, BUT THERR NEED MODIFICATION AT POPULATE FUNCTION!!!
+      function refresh_table() {
+        $("thead tr").empty();
+        $("tbody tr").empty();
+        var url = `/dodle/get-all-form-items/${formInfo[0].id}`;
+        $.getJSON(url, function (response) {
+          populate_table(response);
+        });
+      }
+
+
+      //***********************************************************************************************************************************************************
+      //NEED MODIFICATION TO SUPPORT 4 TYPES OF FORM AT headCellTML,bodyCellHTML part possibly using conditional logic
+      function populate_table(formItems) {
+        // console.log( {{ current_user.id }} , formInfo[0].owner_id);
+        const isAdmin = {{ current_user.id | default(0) }} == formInfo[0].owner_id;
+        // const isAdmin = true;
+
+      formItems.sort((a, b) => a.id - b.id);
+      formItems.forEach(item => {
+        const headCellHTML = `
+                                <td>
+                                  <div class="flex items-center justify-center">${item.date}</div>
+                                  <div class="flex items-center justify-center">${item.start_time}</div>
+                                  <div class="flex items-center justify-center">${item.end_time}</div>
+                                </td>
+                                `;
+        //TODO: make if else for bodyCell
+        let bodyCellHTML = `
+                                <td class="hover:bg-blue-200">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-blue-500 font-bold text-xl cursor-pointer"> ☑️ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                `;
+
+                                if(item.score == item.maxcap){
+                                  bodyCellHTML = `
+                                <td class="bg-green-300">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-green-500 font-bold text-xl cursor-pointer"> ✔️ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                                    `;
+                                }
+        $("thead tr").first().append(headCellHTML);
+
+        $("tbody tr").first().append(bodyCellHTML);
+
+        //for admin user
+        if (isAdmin) {
+          $("table#admin_table thead tr").first().prepend(headCellHTML);
+        }
+
+      });
+      //these two line can be left as it is
+      $("thead tr").first().prepend(`<td></td>`);
+      $("tbody tr").first().prepend(`<td class="leave_me_alone"><div class="flex items-center justify-center"  >pick your availability</div></td>`);
+
+
+      //***********************************************************************************************************************************************************
+      //POPULATE USER VOTE INFO BELOW TABLE, NEED CONDITIONAL FOR IT TO WORK WITH ALL TYPES OF FORM
+      var current_form_id = formInfo[0].id;
+      $.getJSON(`/dodle/get-all-form-participants/${current_form_id}`, function (all_current_form_participants) {
+        all_current_form_participants.forEach(participant => {
+          // console.log(participant);
+          $("tbody tr:first").after(`<tr id="${participant.id}"> <td><div class="flex items-center justify-center" >👤 ${participant.name}</div></td> </tr>`)
+          $.getJSON(`/dodle/get-all-form-participant-choices/${participant.id}`, function (this_paricipant_choices) {
+            // console.log(this_paricipant_choices);
+
+            formItems.forEach(item => {
+
+
+              let found = this_paricipant_choices.find(obj => obj.form_item_id == item.id);
+              if (found === undefined) {
+                $(`tbody tr#${participant.id}`).append(`<td><div></div></td>`)
+              } else {
+                $(`tbody tr#${participant.id}`).append(`<td class="bg-green-300"><div class="flex items-center justify-center">✔️</div></td>`)
+              }
+            });
+          });
+        });
+      });
+      } //END POPULATE_TABLE FUNCTION ****************************************************************************************************************************
+
+
+
+
+
+
+
+
+      //FOR EVENT THAT NEED DELEGATION/INVOKE AS THE PAGE LOAD
+      $(document).ready(function () {
+
+        $(".admin_delete").click(function(){
+          if(!confirm("are you sure you want to delete this post?")){
+            return;
+          }
+          $.post("/dodle/remove-form", {"form_id" : formInfo[0].id},function(response){
+            console.log(response);
+
+            if(response == "deleted"){
+              window.location.href = "/dodle/home";
+              alert("delete successfuly!");
+            }
+          });
+        });
+
+
+        populate_table(formItems);
+
+        //USER SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+        // select vote event handler
+        $("tbody").on("click", "tr:first td", function () {
+          if ($(this).hasClass("leave_me_alone")) {
+            return;
+          }
+          var current_score = parseInt($(this).find("input.form_item_score").val(), 10);
+          var maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+          var form_item_id = parseInt($(this).find("input.form_item_id").val(), 10);
+          var $form = $("#hidden_form_that_will_do_the_magic");
+
+          if( current_score == maxcap){
+            alert('you have already selected that option!');
+            return;
+          }
+
+
+          if ($(this).hasClass("bg-green-300 hover:bg-green-300")) { //undo select
+            $(this).find("div:first").text(`☑️ ${current_score} / ${maxcap}`);
+            $(this).removeClass("bg-green-300 hover:bg-green-300");
+
+            $form.find(`#for_form_item_id_${form_item_id}`).remove();
+          } else { //select
+            //undo all select before
+            $(this).siblings().removeClass("bg-green-300 hover:bg-green-300");
+            //set all td to have correct score
+            $(this).siblings("td:not(.leave_me_alone)").each(function(){
+              var sibling_score = parseInt($(this).find("input.form_item_score").val(),10);
+              var sibling_maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+
+              $(this).find("div:first").text(`☑️ ${sibling_score} / ${sibling_maxcap}`);
+            });
+            clear_form();
+
+            $(this).find("div:first").text(`✅ ${current_score + 1} / ${maxcap}`);
+            $(this).addClass("bg-green-300 hover:bg-green-300");
+            const hiddenInput = `
+                                    <input type="number" class="hidden tanya" name="form_item_id_${form_item_id}" id="for_form_item_id_${form_item_id}" value=${form_item_id}>
+                                  `;
+            $form.append(hiddenInput);
+          }
+        }); //end select vote event handler
+
+
+
+
+
+        //submit vote event handler
+        $("#hidden_form_that_will_do_the_magic").submit(function (event) {
+          //prevent default html form submission action, cuz I want to do AJAX call below the submit button to show something cool
+          event.preventDefault();
+
+          //pack the inputs into a dictionary(js object bruhh, dictionary such a goofy name to me)
+          var formData = {};
+          $(":input").each(function () {
+            var key = $(this).attr("name");
+            var val = $(this).val();
+
+            if (key == undefined) {
+              return;
+            }
+            formData[key] = val;
+          });
+
+          //don't allow user to send vote and participate when he don't tick any box
+          if (Object.keys(formData).length === 2) {
+            alert("you have yet to select anything!");
+            return;
+          }
+          formData['form_info_id'] = formInfo[0]['id'];
+
+
+          var form_item_id = $(this).find("input.hidden.tanya").val();
+          
+          var title = "",message = "", email = formData['email'];
+          // console.log(formData)
+          formItems.forEach(item => {
+            if(item.id == form_item_id){
+              title = formInfo[0].title;
+              message = "you have appointment on " + item.date +" from "+ item.start_time + " to " + item.end_time + " at " + formInfo[0].location + " the duration is specify to be " + formInfo[0].duration + ", we hope you can make your attendance.";
+            } else {
+              return;
+            }
+          });
+/*
+          console.log(formData);
+          var $form = $(this);
+          var url = `/dodle/send-vote/${formInfo[0].id}`;
+
+          //make post request to send vote
+          $.post(url, formData, function (response) {
+            if(response == "success"){
+              //send notify mail
+              $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                console.log(response);
+              });
+            } else {
+              alert("the room already full! please select another option")
+            }
+
+            refresh_table();
+            clear_form();
+          });
+*/
+          $.getJSON(`/hashing/${formInfo[0]['title']}`, function(response){
+            formData['form_voting_password'] = response.hashed_title;
+            
+            console.log(formData);
+            var $form = $(this);
+            var url = `/dodle/send-vote/${formInfo[0].id}`;
+  
+            //make post request to send vote
+            $.post(url, formData, function (response) {
+              if(response == "success"){
+                //send notify mail
+                $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                  console.log(response);
+                });
+              } else {
+                alert("the room already full! please select another option")
+              }
+  
+              refresh_table();
+              clear_form();
+            });
+          });
+        }); //end submit vote event handler
+
+
+
+      });
+    </script>
+    {% else %} 
+    <script>
+      var formItems = {{ form_items | tojson }}; // CONTAIN LIST OF FORM iTEMS (EACH VOTE/SIGN-UP OPTION SLOT)
+      var formInfo = {{ form_info | tojson }}; // CONTAIN LIST OF ONE OBJECT(BRUH) ABOUT FORM INFO, LIKE FORM ID(USE FOR SENDING QUERY TO BACKEND), TITLE, DESCRIPTION ETC.
+
+
+      //WORK FOR ALL TYPE OF FORM, BY USING HIDDEN INPUT AS CONVENTION
+      function clear_form() {
+        var $form = $("#hidden_form_that_will_do_the_magic");
+        $form.find("input.hidden.tanya").remove(); //CONVENTION ALL HIDDEN INPUT IN MAGIC FORM MUST ALSO CONTAIN CLASS tanya
+      }
+
+
+      //WORK FOR ALL FORM TYPE, BUT THERR NEED MODIFICATION AT POPULATE FUNCTION!!!
+      function refresh_table() {
+        $("thead tr").empty();
+        $("tbody tr").empty();
+        var url = `/dodle/get-all-form-items/${formInfo[0].id}`;
+        $.getJSON(url, function (response) {
+          populate_table(response);
+        });
+      }
+
+
+      //***********************************************************************************************************************************************************
+      //NEED MODIFICATION TO SUPPORT 4 TYPES OF FORM AT headCellTML,bodyCellHTML part possibly using conditional logic
+      function populate_table(formItems) {
+        // console.log( {{ current_user.id }} , formInfo[0].owner_id);
+        const isAdmin = {{ current_user.id | default(0) }} == formInfo[0].owner_id;
+        // const isAdmin = true;
+
+      formItems.sort((a, b) => a.id - b.id);
+      formItems.forEach(item => {
+        const headCellHTML = `
+                                <td>
+                                  <div class="flex items-center justify-center">${item.date}</div>
+                                  <div class="flex items-center justify-center">${item.start_time}</div>
+                                  <div class="flex items-center justify-center">${item.end_time}</div>
+                                </td>
+                                `;
+        //TODO: make if else for bodyCell
+        let bodyCellHTML = `
+                                <td class="hover:bg-blue-200">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-blue-500 font-bold text-xl cursor-pointer"> ☑️ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                `;
+
+                                if(item.score == item.maxcap){
+                                  bodyCellHTML = `
+                                <td class="bg-green-300">
+                                  <input type="number" value=${item.id} class="hidden form_item_id">
+                                  <input type="number" value=${item.score} class="hidden form_item_score">
+                                  <input type="number" value=${item.maxcap} class="hidden form_item_maxcap">
+                                  <div class="flex items-center justify-center text-green-500 font-bold text-xl cursor-pointer"> ✔️ ${item.score} / ${item.maxcap} </div>
+                                </td>
+                                    `;
+                                }
+        $("thead tr").first().append(headCellHTML);
+
+        $("tbody tr").first().append(bodyCellHTML);
+
+        //for admin user
+        if (isAdmin) {
+          $("table#admin_table thead tr").first().prepend(headCellHTML);
+        }
+
+      });
+      //these two line can be left as it is
+      $("thead tr").first().prepend(`<td></td>`);
+      $("tbody tr").first().prepend(`<td class="leave_me_alone"><div class="flex items-center justify-center"  >pick your availability</div></td>`);
+
+
+      //***********************************************************************************************************************************************************
+      //POPULATE USER VOTE INFO BELOW TABLE, NEED CONDITIONAL FOR IT TO WORK WITH ALL TYPES OF FORM
+      var current_form_id = formInfo[0].id;
+      $.getJSON(`/dodle/get-all-form-participants/${current_form_id}`, function (all_current_form_participants) {
+        all_current_form_participants.forEach(participant => {
+          // console.log(participant);
+          $("tbody tr:first").after(`<tr id="${participant.id}"> <td><div class="flex items-center justify-center" >👤 ${participant.name}</div></td> </tr>`)
+          $.getJSON(`/dodle/get-all-form-participant-choices/${participant.id}`, function (this_paricipant_choices) {
+            // console.log(this_paricipant_choices);
+
+            formItems.forEach(item => {
+
+
+              let found = this_paricipant_choices.find(obj => obj.form_item_id == item.id);
+              if (found === undefined) {
+                $(`tbody tr#${participant.id}`).append(`<td><div></div></td>`)
+              } else {
+                $(`tbody tr#${participant.id}`).append(`<td class="bg-green-300"><div class="flex items-center justify-center">✔️</div></td>`)
+              }
+            });
+          });
+        });
+      });
+      } //END POPULATE_TABLE FUNCTION ****************************************************************************************************************************
+
+
+
+
+
+
+
+
+      //FOR EVENT THAT NEED DELEGATION/INVOKE AS THE PAGE LOAD
+      $(document).ready(function () {
+
+        $(".admin_delete").click(function(){
+          if(!confirm("are you sure you want to delete this post?")){
+            return;
+          }
+          $.post("/dodle/remove-form", {"form_id" : formInfo[0].id},function(response){
+            console.log(response);
+
+            if(response == "deleted"){
+              window.location.href = "/dodle/home";
+              alert("delete successfuly!");
+            }
+          });
+        });
+
+
+        populate_table(formItems);
+
+        //USER SECTION -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+        // select vote event handler
+        $("tbody").on("click", "tr:first td", function () {
+          if ($(this).hasClass("leave_me_alone")) {
+            return;
+          }
+          var current_score = parseInt($(this).find("input.form_item_score").val(), 10);
+          var maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+          var form_item_id = parseInt($(this).find("input.form_item_id").val(), 10);
+          var $form = $("#hidden_form_that_will_do_the_magic");
+
+          if( current_score == maxcap){
+            alert('you have already selected that option!');
+            return;
+          }
+
+
+          if ($(this).hasClass("bg-green-300 hover:bg-green-300")) { //undo select
+            $(this).find("div:first").text(`☑️ ${current_score} / ${maxcap}`);
+            $(this).removeClass("bg-green-300 hover:bg-green-300");
+
+            $form.find(`#for_form_item_id_${form_item_id}`).remove();
+          } else { //select
+            //undo all select before
+            $(this).siblings().removeClass("bg-green-300 hover:bg-green-300");
+            //set all td to have correct score
+            $(this).siblings("td:not(.leave_me_alone)").each(function(){
+              var sibling_score = parseInt($(this).find("input.form_item_score").val(),10);
+              var sibling_maxcap = parseInt($(this).find("input.form_item_maxcap").val(), 10);
+
+              $(this).find("div:first").text(`☑️ ${sibling_score} / ${sibling_maxcap}`);
+            });
+            clear_form();
+
+            $(this).find("div:first").text(`✅ ${current_score + 1} / ${maxcap}`);
+            $(this).addClass("bg-green-300 hover:bg-green-300");
+            const hiddenInput = `
+                                    <input type="number" class="hidden tanya" name="form_item_id_${form_item_id}" id="for_form_item_id_${form_item_id}" value=${form_item_id}>
+                                  `;
+            $form.append(hiddenInput);
+          }
+        }); //end select vote event handler
+
+
+
+
+
+        //submit vote event handler
+        $("#hidden_form_that_will_do_the_magic").submit(function (event) {
+          //prevent default html form submission action, cuz I want to do AJAX call below the submit button to show something cool
+          event.preventDefault();
+
+          //pack the inputs into a dictionary(js object bruhh, dictionary such a goofy name to me)
+          var formData = {};
+          $(":input").each(function () {
+            var key = $(this).attr("name");
+            var val = $(this).val();
+
+            if (key == undefined) {
+              return;
+            }
+            formData[key] = val;
+          });
+
+          //don't allow user to send vote and participate when he don't tick any box
+          if (Object.keys(formData).length === 2) {
+            alert("you have yet to select anything!");
+            return;
+          }
+          formData['form_info_id'] = formInfo[0]['id'];
+
+
+          var form_item_id = $(this).find("input.hidden.tanya").val();
+          
+          var title = "",message = "", email = formData['email'];
+          // console.log(formData)
+          formItems.forEach(item => {
+            if(item.id == form_item_id){
+              title = formInfo[0].title;
+              message = "you have appointment on " + item.date +" from "+ item.start_time + " to " + item.end_time + " at " + formInfo[0].location + " the duration is specify to be " + formInfo[0].duration + ", we hope you can make your attendance.";
+            } else {
+              return;
+            }
+          });
+/*
+          console.log(formData);
+          var $form = $(this);
+          var url = `/dodle/send-vote/${formInfo[0].id}`;
+
+          //make post request to send vote
+          $.post(url, formData, function (response) {
+            if(response == "success"){
+              //send notify mail
+              $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                console.log(response);
+              });
+            } else {
+              alert("the room already full! please select another option")
+            }
+
+            refresh_table();
+            clear_form();
+          });
+*/
+          $.getJSON(`/hashing/${formInfo[0]['title']}`, function(response){
+            formData['form_voting_password'] = response.hashed_title;
+            
+            console.log(formData);
+            var $form = $(this);
+            var url = `/dodle/send-vote/${formInfo[0].id}`;
+  
+            //make post request to send vote
+            $.post(url, formData, function (response) {
+              if(response == "success"){
+                //send notify mail
+                $.post("/send-mail",{"title": title, "message": message, "email": email},function(response){
+                  console.log(response);
+                });
+              } else {
+                alert("the room already full! please select another option")
+              }
+  
+              refresh_table();
+              clear_form();
+            });
+          });
+        }); //end submit vote event handler
+      });
+    </script>
+    {% endif %}
+  </body>
+</html>

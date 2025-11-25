@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.color{
+    background-color: #A6E0BF;
+    background-color: #F9F5E4;
+    background-color: #0061EE;
+    background-color: #FFBCF9;
+    background-color: #FF7300;
+    background-color: #EBDE6C;
+    background-color: #F5BF42;
+    background-color: #2A2A2D;
+}
+
+* {
+    font-family: Poppins;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins';
+    margin: 0;
+    padding: 0;
+    background-color: #FDFBF3;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Header เต็มหน้าจอ */
+.header_sidebar {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.header_sidebar a{
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+
+/* ปิด sidebar เป็นค่าเริ่มต้น */
+.sidebar {
+    width: 0;
+    background-color: #2A2A2D;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* จัดเรียงเนื้อหาใน sidebar เป็นแนวตั้ง */
+}
+
+.sidebar.expand {
+    width: 300px;
+    position: fixed;
+    min-height: 100%;
+}
+
+/* ดันให้ footer ไปอยู่ล่างสุด */
+.sidebar-footer {
+    margin-top: auto;
+}
+
+
+/* ปรับขนาดเนื้อหาหลักเมื่อ sidebar ขยาย */
+.main {
+    flex: 1;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main.shift {
+    margin-left: 300px;
+}
+
+/* ปุ่ม List Menu */
+.btn_list_menu img {
+    height: 25px;
+    width: 35px;
+}
+
+.btn_list_menu {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: 1.2rem 1rem;
+    color: #FFF;
+    display: block;
+    font-size: 1rem; /* 16px */
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+span{
+    font-size: 20px;
+    padding-left: 15px;
+}
+
+
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.377);
+    border-radius: 10px;
+    border-left: 5px solid #ffffff;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #2A2A2D;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+
+.icon_menu{
+    height: 40px;
+    width: 40px;
+}
+
+
+.go_back_home{
+    padding-left: 5px;
+    color: black;
+}

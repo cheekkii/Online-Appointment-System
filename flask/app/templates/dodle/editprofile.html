@@ -1,0 +1,86 @@
+{% extends "dodle/base.html" %} 
+{% block styles %}
+    <!--My css-->
+    <link rel="stylesheet" href="/static/css/editprofile.css">
+    <style>
+        /* Add additional styles if needed */
+        .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-name {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .user-email {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .user-dob {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .edit-profile-button {
+            background-color: #EBDDF8;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 20px 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            border: 1px solid #000000;
+
+        }
+
+        .go_back_home {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .container {
+            position: relative;
+            padding-top: 20px;
+        }
+            </style>
+{% endblock styles %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+
+<body>
+    <a href="home" class="go_back_home">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" width='30' height='30' class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>                         
+    </a>
+    <div class="container">
+        <h1>Profile</h1>
+        <div class="profile-header">
+            <img src="{{ user.avatar_url }}" alt="Profile Avatar" id="selected-avatar">
+        </div>
+        <section class="profile-content">
+            <div class="user-info">
+                <h1 class="user-name" id="profile-name">{{ user.name }}</h1>
+                <p class="user-email" id="profile-email">{{ user.email }}</p>
+                <p class="user-dob" id="profile-dob"></p>
+            </div>
+            <button class="edit-profile-button" id="edit-profile-button">Edit profile</button>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('edit-profile-button').onclick = function() {
+            window.location.href = "/dodle/newprofile";
+        };
+    </script>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Thank you</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+          <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+            * {
+                font-family: Poppins;
+            }
+
+            .block_thank{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh; 
+            }
+
+            .thank_you{
+                width: 50%;
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center; 
+                height: auto;
+            }
+
+            .thank_you .info{
+                text-align: center;
+                width : 60%;
+            }
+
+            .under_line {
+                border-bottom: 1px solid black;
+                width : 100%;
+            }
+
+            .thank_you .time_selected{
+                text-align:left;
+                width:60%;
+            }
+
+            .thank_you .back_to_create{
+                text-align:center;
+                width:60%;
+            }
+            
+            p{
+                margin:0;
+            }
+
+            h4{
+                margin:0;
+            }
+
+            .back_to_create p {
+                font-size: 14px;
+            }
+
+            button {
+                margin-top:20px;
+                background-color: rgb(202, 157, 245, 0.5); /* สีฟ้าสดใส */
+                color: white;
+                font-size: 16px;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s;
+              }
+              
+              button:hover {
+                background-color: rgb(202, 157, 245); /* สีเข้มขึ้นเมื่อโฮเวอร์ */
+                transform: scale(1.05); /* ขยายเล็กน้อยเมื่อโฮเวอร์ */
+              }
+              
+              button:active {
+                background-color: #rgb(202, 157, 245); /* สีเข้มขึ้นเมื่อกด */
+                transform: scale(0.95); /* ลดขนาดเล็กน้อยเมื่อกด */
+              }
+              
+
+        </style>
+    </head>
+    <body>
+
+        <div class='block_thank'>
+            <div class='thank_you'>
+                <div class='info'>
+                    <h2>Thank For Voting!</h2>
+                    <p>You can expect a response via email once all votes have been submitted.</p>
+                    <hr></hr>
+                </div>
+                <div class='time_selected'></div>
+                <div class='back_to_create'>
+                    <hr></hr>
+                    <p>Ready to build your own form? Start now!</p>
+                    <a href='/dodle/home'><button>Create your own form</button></a>
+                </div>
+            </div>
+        </div>
+        
+
+
+    <script>
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataString = urlParams.get('data');
+
+        // แปลงกลับเป็นอาร์เรย์
+        const list_user_time = JSON.parse(decodeURIComponent(dataString));
+        console.log(list_user_time);
+        var time_selected = $('.time_selected');
+        time_selected.empty();
+        for(var key in list_user_time){
+            if (key === 'undefined' || list_user_time[key] === undefined) {
+                continue;
+            }
+            var split_t  = list_user_time[key].join(' | ')
+            var new_text = `
+                <h4>${key}</h4>
+                <p class='time_se'>${split_t}</p>
+            `;
+            time_selected.append(new_text);
+        }
+
+        console.log('type_form', type_form);
+
+
+    </script>
+
+    </body>
+</html>

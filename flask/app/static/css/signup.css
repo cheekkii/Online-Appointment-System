@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f8f6f1;
+  font-family: 'Arial', sans-serif;
+}
+.left-side,
+.right-side {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding: 30px;
+}
+
+/* Left Side */
+.left-side .content {
+  position: absolute;
+  top: 30%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.left-side h1{
+  font-size: 60px;
+}
+.left-side .highlight{
+  background-color: transparent;
+  border: 2px solid black;
+  padding: 5px 10px;
+  border-radius: 30px;
+  font-size: 20px;
+}
+.left-side .blue-text {
+  background-color: #0061EE1A;
+  padding: 5px 10px;
+  border-radius: 30px;
+}
+/* Decoration */
+shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.shape {
+  position: absolute;
+  z-index: 5;
+}
+.circle{
+  position: absolute;
+  border-radius: 50px;
+  z-index: 5;
+}
+
+.block00 { background: #FF7300; width: 241px; height: 125px; top: 400px; left: -20px; border-radius: 20px; }
+.block01 { background: #B5B2FBB0; width: 124px; height: 124px; top: 360px; left: 172px;border-radius: 30px; }
+.block02 { background: #0061EE54; width: 80px; height: 80px; top: 300px; left: 0px; }
+
+.block10 { background: #F4B8DAAB;width: 107px; height: 88px; bottom: 160px; left: 640px;}
+.block11 {background: #FF73006E;width: 390px; height: 109px; bottom: 100px; left: 747px; border-radius: 30px;}
+.block12 {background: #0061EE;width: 148px; height: 72px; bottom: 160px; left: 700px; border-radius: 30px;}
+.block13{background: #EBDE6C6E;width: 98px; height: 84px; bottom: 300px; left: 847px; border-radius: 30px;}
+.block14{background-color: #000000;width: 239px; height: 58px; bottom: 120px; left: 550px; border-radius: 30px;}
+
+.block20 {background: #00000073;width: 301px; height: 52px; top: 45px; left: 800px; border-radius: 30px;}
+.block21 { background: #0055ff; width: 76px; height: 74px; top: 2px; left: 810px;}
+.block22{ background: #F5BF42; width: 301px; height: 52px; top: 97px; left: 700px; border-radius: 30px; }
+
+.block30 {background: #A7DFBF;width: 361px;height: 7px;top: 315px;left: 421px; border-radius: 30px;}
+.block31 {background: #0061EE36;width: 119px;height: 7px;top: 335px;left: 400px; border-radius: 30px;}
+.block32 {background: #F5BF42;width: 206px;height: 7px;top: 335px;left: 540px; border-radius: 30px;}
+.block33 {background: #FFBCF9;width: 206px;height: 7px;top: 355px;left: 400px; border-radius: 30px;}
+.block34 {background: #0061EE36;width: 70px;height: 7px;top: 355px;left: 630px; border-radius: 30px;}
+.block35 {background: #A7DFBF;width: 361px;height: 7px;top: 315px;left: 421px; border-radius: 30px;}
+
+/* Login Box */
+.box-area {
+  position: absolute;
+  width: 500px;
+  max-width: 100%;
+  min-width: 400px;
+  margin-left: 220px;
+  margin-top: 2%;
+  padding: 0px;
+  background: white;
+  border-radius: 0px;
+  z-index: 10;
+
+}
+.input-group{
+  position: relative;
+  width: 100%;
+  padding: 12px 0;
+  padding-top: 10%;
+  line-height: 24px;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #808080;
+  color: #000;
+  border-color: #808080;
+ }
+.input-group label{
+  top: 30%;
+  position: absolute;
+  transform: translateY(-50%);
+  color: #808080;
+ }
+ .input-group input{
+  width: 100%;
+  height: 50px;
+  background: white;
+  border: none;
+  outline: none;
+ }
+ .password-box button{
+  line-height: 120px;
+ }
+
+.form-check-input{
+  border-radius: 0px;
+}
+
+/* Buttons */
+.btn-dark {
+  background: black;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.btn-light {
+  background: #f8f9fa;
+  color: black;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+}
+.back{
+  padding-left: 70%;
+}
+.arrow{
+  transform: scaleX(-1);
+  width: auto;
+  height: 20px;
+}
+
+
+/* Responsive - Hide left side on small screens */
+@media (max-width: 768px) {
+  .left-side {
+      display: none; /* Hide left side on small screens */
+  }
+  .right-side {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-right: 30%;
+      padding: bottom 50%;
+  }
+  .brand-name {
+      padding-right: 40%;
+      font-size: 60px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      letter-spacing: -10px;
+      text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3), 0px 0px 0px rgba(0, 0, 0, 0.3);
+      .d-red { color: #000000; }
+      .d-green { color: #000000; }
+      .d-yellow { color: #000000; }
+      .d-blue { color: #000000; }
+      .d-purple { color: #000000; }
+  }
+}

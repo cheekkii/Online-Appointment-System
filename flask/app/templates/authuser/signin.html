@@ -1,0 +1,162 @@
+{% extends "authuser/index.html" %}
+{% block  content%}
+<link rel="stylesheet" href="/static/css/signup.css">
+<div class="container-fluid">
+        <div class="row vh-100">
+        <!-- Left Side (Branding & Design) -->
+        <div class="col-md-6 d-none d-md-flex left-side">
+            <div class="shapes">
+                <div class="shape block01"></div>
+                <div class="shape block00"></div>
+                <div class="circle block02"></div>
+              </div>
+              <div class="shapes">
+                <div class="circle block10"></div>
+                <div class="shape block11"></div>
+                <div class="shape block12"></div>
+                <div class="shape block13"></div>
+                <div class="shape block14"></div>
+        
+              </div>
+              <div class="shapes">
+                <div class="shape block20"></div>
+                <div class="circle block21"></div>
+                <div class="shape block22"></div>
+              </div>
+              <div class="shapes">
+                <div class="shape block30"></div>
+                <div class="shape block31"></div>
+                <div class="shape block32"></div>
+                <div class="shape block33"></div>
+                <div class="shape block34"></div>
+                <div class="shape block35"></div>
+              </div>
+            <div class="content text-center">
+                <h1><strong>Dodle</strong> <span class="highlight">Your Smart</span></h1>
+                <h4 class="blue-text"><strong>Scheduling Assistant!</strong></h4>
+            </div>
+        </div>
+        <!-- Show name for small screen -->
+      <div class="d-block d-md-none text-center mt-3">
+        <h1 class="brand-name">
+          <strong>
+          <span class="dodle-small d-red">D</span>
+          <span class="dodle-small d-green">o</span>
+          <span class="dodle-small d-yellow">d</span>
+          <span class="dodle-small d-blue">l</span>
+          <span class="dodle-small d-purple">e</span>
+          </strong>
+        </h1>
+      </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center right-side">
+            <div class="border rounded-5 p-4 box-area">
+              <div class="header-text mb-4 text-center">
+                <h2><strong>Sign up</strong></h2>
+                <p class="text-muted">Please enter your details</p>
+              </div>
+              <form action="/signin" id="signup-form" method="POST">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-info">
+                  {{ message }}
+
+                </div>
+                {% endfor %}
+                <div class="input-group mb-3">
+                    <input type="text" id="username" name="username" class="form-control" required>
+                    <label>username</label>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" id="email" name="email" class="form-control" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-group mb-3 password-box">
+                    <input type="password" id="password" name="password" class="form-control ">
+                    <button id="visibility1" class="material-symbols-outlined icon" type="button" required>visibility_off</button>
+                    <label>Password</label>
+                </div>
+                <div class="input-group mb-3 password-box">
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    <button id="visibility2" class="material-symbols-outlined icon" type="button">visibility_off</button>
+                    <label>Confirm Password</label>
+                </div>
+                <div class="input-group mb-3">
+                    <button class="btn btn-lg btn-dark w-100 fs-6" type="submit">Sign Up</button>
+                </div>
+                
+                <!-- ADDED FOR CSRF by tanya -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              </form>
+              <div class="back">
+                <small><img src="{{ url_for('static', filename='icon/start.png') }}" alt="arrow" class="arrow"> <a href="/login">Back to Login</a></small>
+              </div>
+            </div>
+          </div>
+        </div> 
+    </div>
+    </div>
+
+    <script>
+        $("#visibility1").click(function(){
+            let currentIcon = $(this).text().trim(); // ดึงค่าปัจจุบัน
+            let passwordField = $("#password");
+            let currentType = passwordField.attr("type");
+            
+            if(currentType == "password"){
+                $(this).text("visibility"); // เปลี่ยนไอคอนเป็นเปิดตา
+                passwordField.attr("type", "text"); // เปลี่ยนเป็นแสดงรหัสผ่าน
+            }else{
+                $(this).text("visibility_off"); // เปลี่ยนไอคอนเป็นเปิดตา
+                passwordField.attr("type", "password"); // เปลี่ยนเป็นซ่อนรหัสผ่าน
+            }
+        });
+
+        $("#visibility2").click(function(){
+            let currentIcon = $(this).text().trim(); // ดึงค่าปัจจุบัน
+            let passwordField = $("#confirmpass");
+            let currentType = passwordField.attr("type");
+            
+            if(currentType == "password"){
+                $(this).text("visibility"); // เปลี่ยนไอคอนเป็นเปิดตา
+                passwordField.attr("type", "text"); // เปลี่ยนเป็นแสดงรหัสผ่าน
+            }else{
+                $(this).text("visibility_off"); // เปลี่ยนไอคอนเป็นเปิดตา
+                passwordField.attr("type", "password"); // เปลี่ยนเป็นซ่อนรหัสผ่าน
+            }
+            
+        });
+
+        $("#signup-form").submit(function(event){
+          event.preventDefault();
+          var formData = {};
+          $(":input").each(function(){
+            var key = $(this).attr("name");
+            var val = $(this).val();
+
+            if(key == undefined){
+              return;
+            }
+            formData[key] = val;
+          });
+
+          if (formData['password'] != formData['confirm_password']){
+            console.log("wrong")
+            alert("password and comfirm password not mathched");
+            return;
+          }
+
+          //POST request
+          var url = '/signin';
+          $.post(url, formData, function(response){
+            if(response == "email has already been used"){
+              alert("email has already been used")
+            } else {
+              window.location.href = "/dodle/profile";
+            }
+          })
+        });
+    </script>
+
+{% endblock  %}
+
+
+

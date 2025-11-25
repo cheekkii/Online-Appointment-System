@@ -1,0 +1,196 @@
+{% extends "dodle/base.html" %} 
+{% block styles %}
+    <!--My css-->
+    <link rel="stylesheet" href="/static/css/booking_page.css">
+{% endblock styles %}
+
+{% block content %}
+<a href="home" class="go_back_home">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" width='30' height='30' class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+    </svg>                         
+</a>
+
+<div class="group_poll_page">
+                            <!--type of form and current user name-->
+    <form id="group-poll-form" class="form_grouppoll">
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header_tab">
+                        <div class="type_of_form">
+                            <p>Create <br> Booking Page</p>
+                        </div>
+                        <div>
+                            <div class="user_info">
+                                <p class="user_current">{{current_user.name}}</p>
+                                <img src="{{current_user.avatar_url}}" class="img_user">
+                            </div>
+                            <div>
+                                <button type="submit" id="submit_group_poll" class="create_group">Create Booking</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                                        <!--form of group-->
+        <div class="container">
+                <div class="row">
+                    <!-- Column ซ้าย -->
+                    <div class="col-md-6">
+                        <div class="data_info">
+                            <!--title-->
+                            <label for="title">Title</label>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="what's the occasion?" name="title" id="title" required>
+                                <label for="title">Title</label>
+                            </div>
+
+                            <!--description-->
+                            <label for="description">Description</label>
+                            <div class="form-floating">
+                                <textarea class="form-control" name="description" id="description" placeholder="Here you can include things like an agenda, instructions, or other details" style="height: 200px"></textarea>
+                                <label for="description">Description</label>
+                            </div>
+
+                            <!--location-->
+                            <label for="location">Location(optional)</label>
+                            <div class="form-floating">
+                                <input type="text" placeholder="Where will this happen?" class="form-control" placeholder="Where will this happen?" name="location" id="location" required>
+                                <label for="location">Location(optional)</label>
+                            </div>  
+                        </div>
+
+
+                        <div class="manage_time">        
+                            <!--เลือก available-->
+                            <label for="location">Select Available Time</label>
+                            <div class="manage_img">
+                                <div class='mt-1'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width='40' height='40' class="icon1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </div>
+                                <select class="form-select available" aria-label="Default select example" id="inputGroupSelect01" required>
+                                    <option selected>Select Available Time</option>
+                                </select>
+                                <div class='mt-2'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" width='20' height='20' class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>   
+                                </div>
+
+
+                                <select class="form-select available" aria-label="Default select example" id="inputGroupSelect02" required>
+                                    <option selected>Select Available Time</option>
+                                </select>
+                            </div>
+                            <!--เลือก duration-->
+                            <div class="manage_img">
+                                <div class='mt-1'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width='40' height='40' class="icon2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                    </svg>  
+                                </div>
+                                <select class="form-select" aria-label="Default select example" id="duration">
+                                    <option selected>select duration</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                    <option value="60">60</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column ขวา -->
+                    <div class="col-md-6">
+                        <!-- ปฏิทิน -->
+                        <div class="calender">
+                            <div class="calender-header">
+                                <button class="next_month" id="prev_month" type="button"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" width='20px' height='20px'>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                    </svg>
+                                </button>
+                                <!--month-->
+                                <h2 id="monthYear"></h2>
+                                <button class="next_month" id="next_month" type="button"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" width='20px' height='20px'>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>                                  
+                                </button>
+                            </div>
+                            <div class="calender-week">
+                                <div>Sun</div>
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>  
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>  
+                            </div>
+                            <div class="calender-day"></div>
+                        </div>
+                
+                        <!--pop up show time slot-->
+                        <div class="overlay_back" id="popupoverlay">
+                            <div class="popup_time">
+                                <div class='header_time_slot'>
+                                    <h4>Selected time</h4>
+                                </div>
+                                <div class="select-time"></div>
+                                <div><button type="button" id="close_popup" class="close_popup">select</button></div>
+                            </div>
+                        </div>
+                    
+                
+                        <div class="show_date_select">
+                        </div>
+
+
+   
+                    <!--pop up show link to select group poll-->
+                    <div class='overlay_back_link' id='popupoverlay_link'>
+                        <div class='popup_link'>
+                            <div class='edit'>
+                                <h4>Selections</h4>
+                                <button id="btn_edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="30" height="30">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>                                                                            
+                                </button>
+                            </div>
+                            <div class='block_alldata'>
+                                <div class='user_row' style="display: flex; align-items: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width='20' height='20' class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                    </svg>
+                                    <p>{{ current_user.name }} (you)</p>
+                                </div>
+                                <div class='all_data'>
+                                </div>
+                            </div>
+                            <div class='backtohome'>
+                                <button id='back_to_home'>back to home</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- ADDED FOR CSRF by tanya -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    </form>
+</div>
+
+<!--javascript-->
+<script src="/static/js/booking_page.js"></script>
+{% endblock content %}
