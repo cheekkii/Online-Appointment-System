@@ -62,6 +62,4 @@ The system provides:
 
 Clone the repository:
 ```bash
-git clone <repo-url>
-cd Online-Appointment-System
 ./run_docker_compose.sh
