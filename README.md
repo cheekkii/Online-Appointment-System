@@ -58,8 +58,8 @@ The system provides:
 - **Version Control:** Git / GitHub  
 - **Tools & IDE:** VS Code, Docker (for development environment)
 
-## 📦 How to Run (Frontend Part)
+## 📦 How to Run
 
-Clone the repository:
 ```bash
 ./run_docker_compose.sh
+docker compose exec flask python manage.py create_db
